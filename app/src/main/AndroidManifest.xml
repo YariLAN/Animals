@@ -12,10 +12,13 @@
             android:theme="@style/Theme.Puppies"
             tools:targetApi="31">
         <activity
+                android:name=".AddAnimalActivity"
+                android:exported="false"/>
+        <activity
                 android:name=".CatsActivity"
                 android:exported="false"/>
         <activity
-                android:name=".DogsActivity"
+                android:name=".AnimalActivity"
                 android:exported="false"/>
         <activity
                 android:name=".RabbitsActivity"

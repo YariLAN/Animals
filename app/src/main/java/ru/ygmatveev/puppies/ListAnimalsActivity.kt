@@ -5,9 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.*
+import androidx.annotation.UiThread
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
 import ru.ygmatveev.puppies.adapter.AnimalAdapter
 import ru.ygmatveev.puppies.databinding.ActivityListAnimalsBinding
+import ru.ygmatveev.puppies.db.AnimalsDbContext
 import ru.ygmatveev.puppies.model.AnimalModel
 
 class ListAnimalsActivity : AppCompatActivity() {
@@ -15,15 +25,15 @@ class ListAnimalsActivity : AppCompatActivity() {
     lateinit var binding: ActivityListAnimalsBinding
     lateinit var adapter: AnimalAdapter
     lateinit var recyclerView: RecyclerView
+    lateinit var db: AnimalsDbContext
 
     private var imageIds: Array<Int> = arrayOf(
-        R.drawable._655791576_6_gas_kvas_com_p_sobaki_foto_shchenki_6,
-        R.drawable._c874ef1cb9a53dac440b3e962c8350c,
-        R.drawable._644815486_31_fikiwiki_com_p_khomyaki_krasivie_kartinki_39,
-        R.drawable.s1200_11_1)
+        R.drawable.screen_shot_2019_08_08_at_10_51_04_am
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        db = AnimalsDbContext.getDatabase(this)
 
         binding = ActivityListAnimalsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -40,13 +50,31 @@ class ListAnimalsActivity : AppCompatActivity() {
         adapter.setList(initAnimalModelList())
     }
 
+    override fun onStart() {
+        super.onStart()
+        adapter.setList(initAnimalModelList()) // refresh adapter
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.setList(arrayListOf()) // clear adapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter.setList(arrayListOf())
+    }
+
     private fun initAnimalModelList(): ArrayList<AnimalModel> {
         val animalList = ArrayList<AnimalModel>()
 
-        animalList.add(AnimalModel(imageIds[0], "Dogs"))
-        animalList.add(AnimalModel(imageIds[1], "Cats"))
-        animalList.add(AnimalModel(imageIds[2], "Hamsters"))
-        animalList.add(AnimalModel(imageIds[3], "Rabbits"))
+        db.animalsDao().getAllAnimals().asLiveData().observe(this@ListAnimalsActivity) {
+            for (animal in it) {
+                animalList.add(AnimalModel(animal.id!!, animal.name, imageIds[0]))
+            }
+
+            adapter.setList(animalList)
+        }
 
         return animalList
     }

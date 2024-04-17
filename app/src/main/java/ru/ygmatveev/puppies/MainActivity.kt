@@ -31,5 +31,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ListAnimalsActivity::class.java);
             startActivity(intent);
         }
+
+        mainBinding.addAnimal.setOnClickListener {
+            intent = Intent(this, AddAnimalActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

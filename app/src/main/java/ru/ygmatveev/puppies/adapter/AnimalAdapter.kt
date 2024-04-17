@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ru.ygmatveev.puppies.AnimalActivity
 import ru.ygmatveev.puppies.CatsActivity
-import ru.ygmatveev.puppies.DogsActivity
 import ru.ygmatveev.puppies.R
-import ru.ygmatveev.puppies.RabbitsActivity
 import ru.ygmatveev.puppies.databinding.ItemAnimalLayoutBinding
 import ru.ygmatveev.puppies.model.AnimalModel
 
@@ -37,20 +36,24 @@ class AnimalAdapter(context: Context) : RecyclerView.Adapter<AnimalAdapter.Anima
         holder.bind(animals[position])
 
         holder.itemView.setOnClickListener {
-            if (animals[position].label == "Cats") {
-                val intent = Intent(context, CatsActivity::class.java)
-                context.startActivity(intent)
-            }
+//            if (animals[position].label == "Cats") {
+//                val intent = Intent(context, CatsActivity::class.java)
+//                context.startActivity(intent)
+//            }
+//
+//            if (animals[position].label == "Dogs") {
+//                val intent = Intent(context, DogsActivity::class.java)
+//                context.startActivity(intent)
+//            }
+//
+//            if (animals[position].label == "Rabbits") {
+//                val intent = Intent(context, RabbitsActivity::class.java)
+//                context.startActivity(intent)
+//            }
 
-            if (animals[position].label == "Dogs") {
-                val intent = Intent(context, DogsActivity::class.java)
-                context.startActivity(intent)
-            }
-
-            if (animals[position].label == "Rabbits") {
-                val intent = Intent(context, RabbitsActivity::class.java)
-                context.startActivity(intent)
-            }
+            val intent = Intent(context, AnimalActivity::class.java)
+            intent.putExtra("id", animals[position].id)
+            context.startActivity(intent)
         }
     }
 
