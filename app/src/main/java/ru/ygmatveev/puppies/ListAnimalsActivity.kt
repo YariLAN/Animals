@@ -19,6 +19,7 @@ import ru.ygmatveev.puppies.adapter.AnimalAdapter
 import ru.ygmatveev.puppies.databinding.ActivityListAnimalsBinding
 import ru.ygmatveev.puppies.db.AnimalsDbContext
 import ru.ygmatveev.puppies.model.AnimalModel
+import java.util.*
 
 class ListAnimalsActivity : AppCompatActivity() {
 
@@ -47,25 +48,10 @@ class ListAnimalsActivity : AppCompatActivity() {
         adapter = AnimalAdapter(this)
 
         binding.rvAnimals.adapter = adapter
-        adapter.setList(initAnimalModelList())
+        initAnimalModelList()
     }
 
-    override fun onStart() {
-        super.onStart()
-        adapter.setList(initAnimalModelList()) // refresh adapter
-    }
-
-    override fun onStop() {
-        super.onStop()
-        adapter.setList(arrayListOf()) // clear adapter
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        adapter.setList(arrayListOf())
-    }
-
-    private fun initAnimalModelList(): ArrayList<AnimalModel> {
+    private fun initAnimalModelList() {
         val animalList = ArrayList<AnimalModel>()
 
         db.animalsDao().getAllAnimals().asLiveData().observe(this@ListAnimalsActivity) {
@@ -75,7 +61,5 @@ class ListAnimalsActivity : AppCompatActivity() {
 
             adapter.setList(animalList)
         }
-
-        return animalList
     }
 }

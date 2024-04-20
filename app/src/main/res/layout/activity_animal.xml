@@ -5,6 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollHorizontally="false"
         tools:context=".AnimalActivity" android:background="#B6EFEF">
 
     <TextView
@@ -31,19 +32,22 @@
             android:layout_marginBottom="364dp" android:textSize="18sp"/>
     <TextView
             android:text="Факт 1"
-            android:layout_width="341dp"
-            android:layout_height="60dp" android:id="@+id/fact_num1"
+            android:layout_width="326dp"
+            android:layout_height="82dp" android:id="@+id/fact_num1"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/textView10"
             app:layout_constraintVertical_bias="0.113" android:padding="5dp" android:textSize="16sp"/>
     <TextView
             android:text="Факт 2"
-            android:layout_width="338dp"
-            android:layout_height="60dp" android:id="@+id/fact_num2"
+            android:layout_width="324dp"
+            android:layout_height="80dp" android:id="@+id/fact_num2"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:padding="5dp" app:layout_constraintTop_toBottomOf="@+id/fact_num1"
-            app:layout_constraintVertical_bias="0.076" android:textSize="16sp"/>
+            android:inputType="textMultiLine"
+            android:gravity="start|top"
+            android:scrollbars="vertical"
+            app:layout_constraintVertical_bias="0.076" android:textSize="16sp" tools:ignore="TextViewEdits"/>
     <ListView
             android:layout_width="174dp"
             android:layout_height="147dp" android:id="@+id/loc"

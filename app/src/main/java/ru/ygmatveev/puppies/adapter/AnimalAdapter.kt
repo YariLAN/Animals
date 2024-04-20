@@ -36,21 +36,6 @@ class AnimalAdapter(context: Context) : RecyclerView.Adapter<AnimalAdapter.Anima
         holder.bind(animals[position])
 
         holder.itemView.setOnClickListener {
-//            if (animals[position].label == "Cats") {
-//                val intent = Intent(context, CatsActivity::class.java)
-//                context.startActivity(intent)
-//            }
-//
-//            if (animals[position].label == "Dogs") {
-//                val intent = Intent(context, DogsActivity::class.java)
-//                context.startActivity(intent)
-//            }
-//
-//            if (animals[position].label == "Rabbits") {
-//                val intent = Intent(context, RabbitsActivity::class.java)
-//                context.startActivity(intent)
-//            }
-
             val intent = Intent(context, AnimalActivity::class.java)
             intent.putExtra("id", animals[position].id)
             context.startActivity(intent)
